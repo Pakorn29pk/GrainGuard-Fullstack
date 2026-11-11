@@ -1,9 +1,14 @@
 /* GrainGuard floor dashboard (approved mock v15). Every new class uses the gg- prefix so it cannot collide with older styles.
    Layout: fixed 1920×1080 stage scaled to the screen (body zoom, set in live-ui.js). Below 1100 px wide the stage flows for phones. */
 :root{
-  --gg-bg:#F5F6F8; --gg-panel:#FFFFFF; --gg-soft:#F1F2F5; --gg-line:#E7E9ED;
+  /* Rice (approved): warm neutral background, translucent white cards, more translucent frame. No blur (Pi4).
+     Status colours (alarm card, banner, chips, LEDs) stay opaque. Overlays (dialogs, open details) use --gg-solid. */
+  --gg-bg:#EFECE6; --gg-panel:rgba(255,255,255,.80); --gg-soft:rgba(240,243,247,.75); --gg-line:#E7E9ED;
+  --gg-solid:#FFFFFF; --gg-frame:rgba(255,255,255,.55); --gg-ctl:rgba(255,255,255,.6); --gg-ctl-line:rgba(255,255,255,.85);
+  --gg-edge:rgba(255,255,255,.9); --gg-lift:0 6px 18px rgba(20,30,40,.06); --gg-slot:rgba(255,255,255,.35);
+  --gg-stage-bg:linear-gradient(160deg,#E5E0D7 0%,#EFECE6 45%,#F8F7F4 100%);
   /* Text-bearing colours pass WCAG AA (>=4.5:1) on white, --gg-soft and --gg-bg, so labels read from across the mill floor. */
-  --gg-ink:#1C1C1E; --gg-ink-2:#3C3C43; --gg-muted:#66666C;
+  --gg-ink:#1C1C1E; --gg-ink-2:#3C3C43; --gg-muted:#5E5E64;
   --gg-brand:#1E3246; --gg-gold:#C49A3C;
   --gg-alarm:#D42A1E; --gg-alarm-ink:#C9241B; --gg-alarm-bg:#FFE5E3;
   --gg-fault:#9C5200; --gg-fault-bg:#FFF0D9;
@@ -16,8 +21,12 @@
   --gg-num:"Inter","Noto Sans Thai",sans-serif;
 }
 :root[data-theme="dark"]{
-  --gg-bg:#0F1419; --gg-panel:#182028; --gg-soft:#1F2831; --gg-line:#2E3A45;
-  --gg-ink:#E6ECF1; --gg-ink-2:#B3BFCA; --gg-muted:#8996A2; --gg-brand:#A9C3DE;
+  /* Night shift (approved): dark slate, translucent dark cards. */
+  --gg-bg:#111820; --gg-panel:rgba(30,40,50,.78); --gg-soft:rgba(255,255,255,.06); --gg-line:#2E3A45;
+  --gg-solid:#182028; --gg-frame:rgba(24,32,40,.55); --gg-ctl:rgba(255,255,255,.06); --gg-ctl-line:rgba(255,255,255,.12);
+  --gg-edge:rgba(255,255,255,.07); --gg-lift:none; --gg-slot:rgba(30,40,50,.35);
+  --gg-stage-bg:linear-gradient(160deg,#0B1015 0%,#111820 50%,#17202A 100%);
+  --gg-ink:#E6ECF1; --gg-ink-2:#B3BFCA; --gg-muted:#9AA6B1; --gg-brand:#A9C3DE;
   --gg-alarm-ink:#FF8A80; --gg-alarm-bg:#3A1B1A; --gg-fault:#F0B45A; --gg-fault-bg:#3A2A12;
   --gg-learn:#8DB6EA; --gg-learn-bg:#1A2B40; --gg-run:#6CCB93;
   --gg-chart:#A9C3DE; --gg-chart-fill:rgba(169,195,222,.12); --gg-grid:#2A3540; color-scheme:dark;
@@ -35,12 +44,12 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 .gg-muted{color:var(--gg-muted)}
 
 /* ---------- stage ---------- */
-.gg-stage{width:1920px;height:1080px;display:flex;background:var(--gg-bg);color:var(--gg-ink);overflow:hidden}
+.gg-stage{width:1920px;height:1080px;display:flex;background:var(--gg-stage-bg);color:var(--gg-ink);overflow:hidden}
 .gg-col{flex:1;min-width:0;display:flex;flex-direction:column}
 .gg-main{flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;padding:20px 24px;outline:none;overflow:hidden}
 
 /* ---------- sidebar ---------- */
-.gg-side{width:248px;flex:none;display:flex;flex-direction:column;gap:6px;padding:20px 14px;background:var(--gg-panel);border-right:1px solid var(--gg-line)}
+.gg-side{width:248px;flex:none;display:flex;flex-direction:column;gap:6px;padding:20px 14px;background:var(--gg-frame);border-right:1px solid var(--gg-line)}
 .gg-brand{display:flex;align-items:center;gap:12px;padding:4px 8px 20px}
 .gg-brand img{width:44px;height:44px;object-fit:contain}
 .gg-brand b{display:block;font-size:20px;font-weight:700;line-height:1.15}
@@ -57,7 +66,7 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 .gg-user small{font-size:12px;color:var(--gg-muted)}
 
 /* ---------- header ---------- */
-.gg-head{height:80px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 24px;background:var(--gg-panel);border-bottom:1px solid var(--gg-line)}
+.gg-head{height:80px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 24px;background:var(--gg-frame);border-bottom:1px solid var(--gg-line)}
 .gg-head-l{display:flex;align-items:center;gap:14px;font-size:15px;min-width:0}
 .gg-head-l b{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gg-head-r{display:flex;align-items:center;gap:12px}
@@ -95,7 +104,7 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 #live-connection-warning:not([hidden])::before{content:"";width:12px;height:12px;border-radius:50%;flex:none;background:var(--gg-led-bad);box-shadow:0 0 0 4px rgba(229,53,43,.3)}
 
 /* ---------- status bar ---------- */
-.gg-status{height:34px;flex:none;display:flex;align-items:center;gap:20px;padding:0 24px;font-size:14px;color:var(--gg-muted);background:var(--gg-bg);border-top:1px solid var(--gg-line)}
+.gg-status{height:34px;flex:none;display:flex;align-items:center;gap:20px;padding:0 24px;font-size:14px;color:var(--gg-muted);background:var(--gg-frame);border-top:1px solid var(--gg-line)}
 .gg-status>span:last-child{margin-left:auto}
 
 /* ---------- shared controls ---------- */
@@ -120,7 +129,7 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 .gg-ov-head{display:flex;align-items:center;gap:16px}
 .gg-ov-head h2{font-size:22px;margin:0;font-weight:600}
 .gg-ov-head .gg-btn{margin-left:auto;background:var(--gg-panel);border:1px solid var(--gg-line);font-weight:600}
-.gg-slot-empty{border-radius:var(--gg-r);background:var(--gg-panel);opacity:.45}
+.gg-slot-empty{border-radius:var(--gg-r);background:var(--gg-slot);border:1px solid var(--gg-edge)}
 /* always the same 3 × 2 slots; filtered views fill from the top-left */
 .gg-tiles{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:16px}
 .gg-tile{--sc:var(--gg-idle);--hc:var(--gg-alarm);background:var(--gg-panel);border-radius:var(--gg-r);display:flex;flex-direction:column;overflow:hidden;min-height:0;position:relative}
@@ -250,7 +259,11 @@ div.gg-ghost{cursor:default}
 .gg-adv{margin:0;font-size:17px;color:var(--gg-ink-2)}
 .gg-chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:15px;font-size:15px;font-weight:600;color:#fff;background:var(--sc,var(--gg-nodata));white-space:nowrap}
 /* Dark theme status colours are light tints, so text on them must be dark (white on light amber was 1.85:1). */
-:root[data-theme="dark"] .gg-chip,:root[data-theme="dark"] .gg-tagc,:root[data-theme="dark"] .gg-cause{color:#11161C}
+:root[data-theme="dark"] .gg-chip:is([data-level="fault"],[data-level="learning"],[data-level="normal"]),
+:root[data-theme="dark"] :is(.gg-tile[data-level="fault"],.gg-sbox.f,.gg-agrid .guide-issue[data-level="fault"]) :is(.gg-cause,.gg-tagc),
+:root[data-theme="dark"] :is(.gg-btn.gg-pri,.gg-avatar,.gg-steps li b,dialog .button.primary,dialog button[type=submit]){color:#11161C}
+/* Offline / no-data alarm cards: the pale no-data grey is for the icon only; band text uses readable grey. */
+.gg-agrid .guide-issue:not([data-level="alarm"]):not([data-level="fault"]):not([data-level="learning"]) .gg-ac-band{color:var(--gg-muted)}
 .gg-chip[data-level="rest"],.gg-chip[data-level="offline"],.gg-chip[data-level="unknown"],.gg-chip[data-level="empty"],.gg-chip:not([data-level]){background:var(--gg-soft);color:var(--gg-ink-2)}
 .gg-chip[data-level="normal"]{--sc:var(--gg-run)} .gg-chip[data-level="alarm"]{--sc:var(--gg-alarm)} .gg-chip[data-level="fault"]{--sc:var(--gg-fault)} .gg-chip[data-level="learning"]{--sc:var(--gg-learn)} .gg-chip[data-level="rest"]{--sc:var(--gg-idle)}
 .gg-shd{display:flex;align-items:center;gap:14px;flex:none}
@@ -317,7 +330,7 @@ div.gg-ghost{cursor:default}
 .gg-ac-act .gg-btn:first-child{flex:1;justify-content:center}
 .gg-disc{flex:none;border-top:1px solid var(--gg-line);margin:0 20px;padding:10px 0 14px}
 .gg-disc summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--gg-ink-2)}
-.gg-disc[open]{position:absolute;inset:56px 0 0;margin:0;padding:16px 20px;background:var(--gg-panel);overflow:auto;border:0}
+.gg-disc[open]{position:absolute;inset:56px 0 0;margin:0;padding:16px 20px;background:var(--gg-solid);overflow:auto;border:0}
 .gg-agrid .guide-issue{position:relative}
 .gg-disc .guide-codes{list-style:none;padding:0;margin:10px 0;display:flex;flex-direction:column;gap:8px}
 .gg-disc .guide-codes li{display:grid;grid-template-columns:auto 1fr;gap:10px;background:var(--gg-soft);border-radius:var(--gg-r-s);padding:10px 12px}
@@ -471,8 +484,8 @@ div.gg-ghost{cursor:default}
 
 /* ---------- dialogs (machine settings, record change, add machine, profile) ----------
    One place restyles every <dialog>: older variables map to the new tokens and older controls get the new look. */
-dialog{--soft:var(--gg-soft);--line:var(--gg-line);--muted:var(--gg-muted);--ink:var(--gg-ink);--surface:var(--gg-panel);--red:var(--gg-alarm-ink);--red-bg:var(--gg-alarm-bg);--green:var(--gg-run);--amber:var(--gg-fault);--amber-bg:var(--gg-fault-bg);--brand:var(--gg-brand);
-  border:0;border-radius:var(--gg-r);padding:24px 28px;background:var(--gg-panel);color:var(--gg-ink);font-family:var(--gg-ui);box-shadow:0 24px 60px rgba(15,20,25,.25)}
+dialog{--soft:var(--gg-soft);--line:var(--gg-line);--muted:var(--gg-muted);--ink:var(--gg-ink);--surface:var(--gg-solid);--red:var(--gg-alarm-ink);--red-bg:var(--gg-alarm-bg);--green:var(--gg-run);--amber:var(--gg-fault);--amber-bg:var(--gg-fault-bg);--brand:var(--gg-brand);
+  border:0;border-radius:var(--gg-r);padding:24px 28px;background:var(--gg-solid);color:var(--gg-ink);font-family:var(--gg-ui);box-shadow:0 24px 60px rgba(15,20,25,.25)}
 dialog::backdrop{background:rgba(15,20,25,.45)}
 dialog .dialog-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 dialog .dialog-head h2{margin:0;font-size:22px;font-weight:700}
@@ -500,3 +513,10 @@ dialog .icon{width:1em;height:1em;fill:none;stroke:currentColor}
 @media (max-width:1099px){#app{display:block}.gg-stage{width:100%;max-width:100vw}.gg-side{min-width:0;max-width:100%}.gg-col{min-width:0;max-width:100%}.gg-nav{flex:none}.gg-side-foot .gg-nav{display:none}}
 @media (max-width:1099px){.gg-head-r{flex-wrap:wrap;max-width:100%;row-gap:10px}.gg-head-r .gg-sep{display:none}.gg-clockbox strong{font-size:24px}}
 @media (max-width:1099px){.gg-ov-head,.gg-pgh{flex-wrap:wrap}.gg-ov-head h2{flex-basis:100%}.gg-seg button{white-space:nowrap;padding:0 12px}.gg-ov-head .gg-btn{margin-left:0}}
+
+/* Translucent theme finish (Rice / Night shift): cards get a light edge so they read as separate panels;
+   small controls sit on --gg-ctl. The unacknowledged alarm card keeps its solid red (set later in .gg-tile.unack). */
+.gg-card,.gg-tile,.gg-sbox,.gg-wtile,.gg-dcard,.gg-apanel,.gg-agrid .guide-issue{border:1px solid var(--gg-edge);box-shadow:var(--gg-lift)}
+.gg-tile.unack{border-color:transparent}
+.gg-clockbox,.gg-ibtn,.gg-seg,.gg-ov-head .gg-btn,.gg-pill{background:var(--gg-ctl);border-color:var(--gg-ctl-line)}
+html,body{background:var(--gg-bg)}
