@@ -47,7 +47,8 @@
   const out=nodes.map(n=>card(n,c));
   out.push(...pend.slice(0,Math.max(0,6-out.length)));
   if(!out.length)return `<div class="gg-ghost"><span>${c.icon('check')}<small>${c.w.noMatch}</small></span></div>`;
-  if(c.filter==='all')while(out.length<6)out.push(c.isAdmin?`<button type="button" class="gg-ghost" data-action="add-machine"><span>${c.icon('plus')}${c.w.add}<small>${m.slot}</small></span></button>`:`<div class="gg-ghost"><span><small>${m.slot}</small></span></div>`);
+  // Unused slots stay plain (no text, no button) so the 3 × 2 grid keeps its shape; adding a machine is the boxed button in the header.
+  if(c.filter==='all')while(out.length<6)out.push(`<div class="gg-slot-empty" aria-hidden="true"></div>`);
   return out.join('');
  }
  function overview(input){

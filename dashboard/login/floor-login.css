@@ -15,3 +15,25 @@ main{max-width:none;padding:48px 16px}
 .form-panel input:not([type=checkbox]):not([type=radio]),.form-panel select{height:54px;border-radius:12px;font-size:17px}
 .form-panel button[type=submit],.form-panel .primary{height:54px;border-radius:12px;font-size:17px;background:#1E3246;border-color:#1E3246}
 .view h1{font-size:32px}
+/* Create account fits one screen (no scrolling): small inline logo at every size; 2-column form on screens >= 900 px wide.
+   Order fills naturally: name | phone, role | username, password | confirm, then the button full width. */
+.auth-shell:has(.form-panel[data-view="signup"]){gap:16px}
+main:has(.form-panel[data-view="signup"]){padding-top:24px;padding-bottom:16px}
+.auth-shell:has(.form-panel[data-view="signup"]) .auth-wordmark{flex-direction:row;gap:12px;text-align:left}
+.auth-shell:has(.form-panel[data-view="signup"]) .auth-wordmark>.product-mark{width:48px!important;height:48px!important}
+.auth-shell:has(.form-panel[data-view="signup"]) .auth-wordmark .wordmark-text>div{font-size:24px}
+.form-panel[data-view="signup"] .view h1{margin-bottom:14px}
+.form-panel[data-view="signup"] .back{margin-bottom:4px}
+@media (max-width:899px){
+  main:has(.form-panel[data-view="signup"]){padding-top:16px}
+  .form-panel[data-view="signup"] .view h1{font-size:24px;margin-bottom:10px}
+  .form-panel[data-view="signup"] input:not([type=checkbox]):not([type=radio]){height:46px}
+  .form-panel[data-view="signup"] .field small{margin-top:3px;line-height:1.4}
+  #signup-form>.field,#signup-form>.role-field{margin-bottom:9px}
+}
+@media (min-width:900px){
+  .auth-shell>.form-panel[data-view="signup"]{width:min(880px,100%)}
+  #signup-form{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;align-items:start}
+  #signup-form>.field,#signup-form>.role-field{margin:0 0 14px}
+  #signup-form>.primary-button{grid-column:1/-1;margin-top:6px}
+}
