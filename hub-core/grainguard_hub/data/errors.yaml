@@ -1,0 +1,51 @@
+# GrainGuard error catalogue v1 — single source of truth (hub, cloud, dashboard, future manual).
+# Principle: the HUB is the only component that diagnoses. Nodes only report numbers. The one error nobody can report is "hub dead";
+# the cloud dead-man switch reports that one as E900 (and the node tower lights keep working on their own).
+# sev: info | warn | fault | critical     scope: node | fleet | hub | cloud
+codes:
+  E101: {sev: fault, scope: node, th: "เซนเซอร์ไม่มีสัญญาณ (flatline)", rule: "flat==1 ต่อเนื่อง >=60 s ขณะเครื่องเดิน/พัก",
+         causes: ["สาย pickup หลุด/ขาด", "พรีแอมป์/ไฟเลี้ยงบอร์ดเสีย", "pickup หลุดออกจากท่อ"],
+         where: "ก้อนเคสของเครื่องนั้น — เปิดฝา ดูขั้วต่อ J_PK แล้วลองเคาะท่อ", detect: "env แทบนิ่ง (std≈0)"}
+  E102: {sev: fault, scope: node, th: "สัญญาณล้น (saturation)", rule: "sat>0 ใน >=20 จาก 60 s",
+         causes: ["เกนสูงเกินไป", "สายสัญญาณลัดวงจร/ชื้น", "ถูกกระแทกแรงต่อเนื่อง"],
+         where: "ก้อนเคส — ลดเกน (trimmer) หรือตรวจสาย", detect: "ADC ชนเพดาน"}
+  E103: {sev: warn, scope: node, th: "ระดับเสียงพื้นฐานเพี้ยน (drift)", rule: "median(base 10 นาที) นอก [0.5x,2x] ของค่ากลาง 7 วัน",
+         causes: ["pickup/สายรัดหลวง ติดไม่แน่น", "ฝุ่นรำสะสมใต้แผ่นรอง", "ซ่อม/เปลี่ยนท่อ หรือเปลี่ยนจุดติด", "พัดลมดูดรำเปลี่ยนความเร็ว"],
+         where: "ก้อนเคส — ตรวจสายรัด/แผ่นรอง แล้วสั่ง recal", detect: "base ลอยจากประวัติ"}
+  E104: {sev: warn, scope: node, th: "สัญญาณรบกวนสูงผิดปกติ", rule: "noisy (ตั้งค่าได้) ratio สูงแต่ act ต่ำ",
+         causes: ["สายสัญญาณไม่ได้ต่อชีลด์", "มอเตอร์/อินเวอร์เตอร์ใกล้เคียงรบกวน", "สายดินไม่ดี"], where: "ก้อนเคส/เส้นทางสาย", detect: "ratio vs act"}
+  E105: {sev: warn, scope: node, th: "ระบบเรียนรู้ค่าพื้นฐานไม่จบ (CAL ค้าง)", rule: "st==CAL นานเกิน 10 นาที",
+         causes: ["เครื่องสลับเดิน/หยุดตลอด", "สัญญาณไม่นิ่ง"], where: "ก้อนเคส/การเดินเครื่อง", detect: "state"}
+  E111: {sev: fault, scope: node, th: "ช่อง B (piezo puck) ไม่มีสัญญาณ (flatline)", rule: "b.flat==1 ต่อเนื่อง >=60 s ขณะเครื่องเดิน/พัก (เฉพาะเมื่อเปิดช่อง B)",
+         causes: ["สายจาก puck หลุด/ขาด ที่ J2", "puck หลุดจากท่อ/สายรัดหลวง", "ขั้วต่อ J2 หลวง"],
+         where: "ก้อนเคสของเครื่องนั้น — เปิดฝา ดูขั้วต่อ J2 แล้วลองเคาะท่อ (ช่อง A ยังทำงานตามปกติ ตามค่า dec)", detect: "b.env แทบนิ่ง"}
+  E112: {sev: fault, scope: node, th: "ช่อง B (piezo puck) สัญญาณล้น (saturation)", rule: "b.sat>0 ใน >=20 จาก 60 s (เฉพาะเมื่อเปิดช่อง B)",
+         causes: ["ตัวต้านทานโหลด/วงจรจำกัดแรงดันช่อง B ผิดค่า", "สายชื้น/ลัดวงจร", "ถูกกระแทกแรงต่อเนื่อง"],
+         where: "ก้อนเคส — ตรวจวงจรช่อง B และสายที่ J2", detect: "ADC ช่อง B ชนเพดาน"}
+  E201: {sev: fault, scope: node, th: "แรงดันไฟเลี้ยงต่ำ", rule: "vin<19.5 V >=30 s (ไฟ 24 V ที่ก้อนเคส — บอร์ดโชว์ไฟเหลืองนิ่งที่ระดับเดียวกัน)", causes: ["สายไฟ VCT 2x1.0 ยาว/ขั้วต่อหลวงหรือเสื่อม", "ฟิวส์ 1 A ในกล่องจ่ายไฟใกล้ขาด/หน้าสัมผัสไม่ดี", "Mean Well ของเครื่องนั้นจ่ายตก/โหลดเกิน"], where: "ไล่ตามลำดับ: ขั้วต่อ TB-PWR ที่ก้อนเคส → สาย VCT → กล่องจ่ายไฟ DC (ฟิวส์ 1 A) → Mean Well ของเครื่องนั้น", detect: "vin"}
+  E202: {sev: fault, scope: node, th: "แรงดันไฟเลี้ยงสูง", rule: "vin>28 V >=30 s", causes: ["Mean Well ปรับแรงดันสูงเกิน/เสีย", "ต่อสายไฟผิดชุด (เอาชุดอื่นมาต่อ)"], where: "Mean Well ของเครื่องนั้น + กล่องจ่ายไฟ DC", detect: "vin"}
+  E203: {sev: warn, scope: node, th: "อุณหภูมิบอร์ดสูง", rule: "tc>70 C", causes: ["ตากแดด/ความร้อนจากท่อ", "ฝุ่นห่อหุ้ม", "บอร์ดเสีย"], where: "ก้อนเคส", detect: "tc"}
+  E204: {sev: fault, scope: node, th: "บอร์ดรีสตาร์ทซ้ำ ๆ", rule: ">=3 BOOT ใน 10 นาที", causes: ["ไฟตก/สายเสื่อม", "watchdog ทริป (โค้ดค้าง)", "ขั้วต่อหลวง"], where: "ไฟเลี้ยง+สาย ก่อน แล้วค่อยบอร์ด", detect: "BOOT events"}
+  E301: {sev: fault, scope: node, th: "ก้อนเคสไม่ตอบสนอง (offline)", rule: "ไม่มี tele >5 s และ LWT offline; แจ้งหลัง 15 s",
+         causes: ["สาย Cat6 (LAN) หลุด/ขาด/ขั้ว RJ45 เสีย", "พอร์ตสวิตช์เสีย", "ไฟ 24 V ของเครื่องนั้นดับ (ฟิวส์ 1 A ขาด/Mean Well ดับ)", "บอร์ดเสีย"], where: "ตามลำดับ: ไฟ 24 V ของเครื่อง (ดูไฟ LED บอร์ด) → ไฟพอร์ตสวิตช์ → สาย Cat6 LAN → บอร์ด", detect: "last_seen"}
+  E302: {sev: warn, scope: node, th: "แพ็กเก็ตหายมาก (link loss)", rule: "tele หาย >10% ใน 5 นาที", causes: ["ขั้ว RJ45 เสื่อม", "สายขนานสายไฟแรงสูง", "สวิตช์เสีย"], where: "สาย Cat6 LAN + ขั้วต่อของเครื่องนั้น", detect: "seq gap"}
+  E303: {sev: info, scope: node, th: "เฟิร์มแวร์ไม่ตรงเวอร์ชันที่คาด", rule: "fw != expected", causes: ["เปลี่ยนบอร์ดแล้วยังไม่อัปเดต"], where: "ก้อนเคส", detect: "fw"}
+  E401: {sev: warn, scope: node, th: "ปุ่ม ACK ค้าง/กดติด", rule: "ack==1 >30 s", causes: ["ปุ่มเปียก/ฝุ่น", "สายปุ่มลัด"], where: "ปุ่มที่ขายึด tower light", detect: "ack"}
+  E402: {sev: warn, scope: node, th: "เสียงเตือนดังแต่ไม่มีใครกด ACK นาน", rule: "ALARM ไม่ถูก ACK >30 นาที", causes: ["ไม่มีคนอยู่", "ไม่ได้ยินเสียง"], where: "หน้างาน/ผู้รับผิดชอบกะ", detect: "events"}
+  E310: {sev: info, scope: fleet, th: "ระบบถูกถอดปลั๊ก/ไฟดับทั้งโรงสี", rule: "NIC-A link down หรือทุก node เงียบพร้อมกัน", causes: ["ปิดงานประจำวัน", "ไฟดับ"], where: "ปลั๊กตู้ควบคุม", detect: "fleet"}
+  E501: {sev: warn, scope: hub, th: "ดิสก์ hub ใกล้เต็ม", rule: "disk>85%", causes: ["ข้อมูลสะสม", "log เยอะ"], where: "hub", detect: "disk_pct"}
+  E502: {sev: critical, scope: hub, th: "ฐานข้อมูล hub ผิดพลาด", rule: "SQLite error/integrity_check fail", causes: ["ดับไฟระหว่างเขียน", "ดิสก์เสีย"], where: "hub — กู้จาก backup", detect: "db"}
+  E503: {sev: warn, scope: hub, th: "hub ออกอินเทอร์เน็ตไม่ได้", rule: "ส่ง cloud ไม่สำเร็จ >5 นาที", causes: ["สายไป router หลุด", "เน็ตโรงสีล่ม", "cloud ล่ม"], where: "สาย NIC-B / router โรงสี", detect: "uplink"}
+  E504: {sev: warn, scope: hub, th: "cloud ปฏิเสธข้อความ (รหัสลับไม่ตรง)", rule: "HTTP 401/403", causes: ["เปลี่ยน secret แล้วไม่อัปเดต"], where: "ตั้งค่า hub/cloud", detect: "uplink"}
+  E505: {sev: warn, scope: hub, th: "นาฬิกา hub ไม่ตรง", rule: "NTP ไม่ sync >1 ชม. หรือเวลากระโดด", causes: ["ไม่มีเน็ต", "แบต CMOS หมด"], where: "hub", detect: "chrony"}
+  E506: {sev: warn, scope: hub, th: "broker/บริการภายใน hub รีสตาร์ท", rule: "mosquitto/hub-core restart", causes: ["หน่วยความจำ/บั๊ก"], where: "hub log", detect: "self"}
+  E507: {sev: warn, scope: hub, th: "CPU hub ร้อน", rule: "cpu_temp>80 C", causes: ["ตู้ร้อน/ฝุ่น"], where: "hub", detect: "cpu_temp"}
+  E508: {sev: fault, scope: hub, th: "สายไป switch ของ hub หลุด (NIC-A down ขณะ switch ควรมีไฟ)", rule: "NIC-A down + hub on", causes: ["สายระหว่าง hub–switch", "switch ดับ"], where: "ตู้ควบคุม", detect: "link"}
+  E900: {sev: critical, scope: cloud, th: "hub ไม่ตอบสนอง (ตรวจพบโดย cloud)", rule: "ไม่มี heartbeat >90 s", causes: ["ถอดปลั๊ก/ไฟดับ", "hub ค้าง/พัง", "เน็ตโรงสีล่ม"], where: "ตู้ควบคุม: ปลั๊ก → hub → router",
+         detect: "cloud dead-man (ข้อผิดพลาดเดียวที่ hub รายงานเองไม่ได้)"}
+
+# ---- hub-side addition (NOT in spec v1; proposed to coordinator) --------------------------------------------------
+# PROTOCOL.md defines st=FAULT / evt FAULT but errors.yaml has no code for it; every hub flag needs one.
+  E199: {sev: fault, scope: node, th: "บอร์ดรายงานความผิดพลาดภายใน (FAULT)", rule: "st==FAULT หรือ evt FAULT จากบอร์ด",
+         causes: ["บอร์ดตรวจพบความผิดปกติของตัวเอง (ดูรายละเอียดในเหตุการณ์ FAULT)", "สายเซนเซอร์/พรีแอมป์มีปัญหา", "ไฟเลี้ยงไม่นิ่ง"],
+         where: "ก้อนเคสของเครื่องนั้น — ดูรายละเอียดเหตุการณ์ FAULT แล้วลองสั่งรีบูต", detect: "st / evt"}

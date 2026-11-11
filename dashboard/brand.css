@@ -1,0 +1,22 @@
+/* Supplied brand artwork. Product identity is primary; team attribution stays quiet. */
+.sidebar .brandmark{background:#fff;border:1px solid var(--line);border-radius:9px;padding:4px}
+.sidebar .brandmark img{object-fit:contain;filter:none}
+.sidebar .brand-copy small{font-size:9px;letter-spacing:.1px;font-weight:500}
+.profile-copy small{overflow-wrap:anywhere}
+.crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-actions{flex-shrink:0}
+.site-mode-badge{display:inline-flex;align-items:center;min-height:28px;max-width:220px;padding:4px 8px;border:1px solid var(--amber);border-radius:7px;background:var(--amber-bg);color:var(--amber);font-size:11px;font-weight:650;white-space:nowrap}
+.footer .site-footer-copy{min-width:0;overflow-wrap:anywhere}
+.brand-credit{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.brand-credit img{width:17px;height:17px;object-fit:contain;vertical-align:middle}
+.footer .brand-credit{margin-left:9px}
+.auth-wordmark{display:flex;align-items:flex-start;gap:9px;max-width:calc(100% - 104px)}
+.auth-wordmark>.product-mark{display:block;width:34px;height:34px;object-fit:contain;flex:none;background:#fff;border-radius:6px}
+.auth-wordmark .wordmark-text{min-width:0}
+.auth-wordmark .wordmark-text>div{white-space:nowrap}
+.auth-wordmark small.brand-credit{display:flex;font-size:10px;letter-spacing:.15px;margin-top:3px;font-weight:500}
+.auth-wordmark small.brand-credit img{width:18px;height:18px}
+.login-site-context{margin:0 0 18px;font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.login-site-context .site-mode-badge{margin-top:8px;display:table}
+@media(max-width:720px){.auth-wordmark{gap:7px;left:20px}.auth-wordmark>.product-mark{width:28px;height:28px}.auth-wordmark .wordmark-text>div{font-size:20px}.auth-wordmark small.brand-credit{font-size:10px}.auth-wordmark small.brand-credit img{width:15px;height:15px}}
+@media(max-width:600px){.topbar{height:auto;min-height:54px;flex-wrap:wrap;gap:6px}.topbar .crumb{flex:1 1 100%}.topbar .top-actions{width:100%;justify-content:flex-end;flex-wrap:wrap;gap:6px}.site-mode-badge{font-size:10px;max-width:100%;min-height:26px}.footer .brand-credit{margin-left:0}.footer .site-footer-copy{display:flex;flex-wrap:wrap;align-items:center;gap:7px}}

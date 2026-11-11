@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#202b32"><title>GrainGuard · เข้าสู่ระบบ</title>
+  <link rel="icon" type="image/webp" href="../assets/brand/grainguard-product-96.webp"><link rel="stylesheet" href="auth.css"><link rel="stylesheet" href="access.css"><link rel="stylesheet" href="../brand.css"><script src="../site-context.js" defer></script><script src="auth.js" defer></script>
+</head>
+<body data-channel="local">
+  <main>
+    <section class="auth-shell" aria-label="GrainGuard">
+      <header class="auth-topbar">
+        <div class="auth-wordmark">
+          <img class="product-mark" src="../assets/brand/grainguard-product-96.webp" alt="" width="34" height="34">
+          <div class="wordmark-text">
+            <div>Grain<span>Guard</span></div>
+            <small class="brand-attribution">By PumpkinTec</small>
+          </div>
+        </div>
+        <button id="language-toggle" class="language-button" type="button" aria-label="เปลี่ยนภาษาเป็นอังกฤษ" title="เปลี่ยนภาษาเป็นอังกฤษ"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a18 18 0 0 1 0 18 18 18 0 0 1 0-18Z"/></svg><span id="language-code">TH</span></button>
+      </header>
+      <aside class="brand-panel"><img src="assets/grainguard-logo.webp" data-i18n-alt="logoAlt" alt="โลโก้ GrainGuard" width="1280" height="1280"></aside>
+      <div class="form-panel" data-view="login">
+        <p id="login-site-context" class="login-site-context" hidden></p>
+        <div id="form-message" class="message" role="status" aria-live="polite" tabindex="-1" hidden></div>
+        <section class="view" data-screen="login"><h1 tabindex="-1" data-i18n="login">เข้าสู่ระบบ</h1>
+          <form id="login-form" novalidate>
+            <div class="field"><label for="login-identifier"><span data-i18n="identifier">ชื่อผู้ใช้หรือเบอร์โทรศัพท์</span><span class="required" aria-hidden="true"> *</span></label><input id="login-identifier" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" data-i18n-placeholder="identifierPlaceholder" placeholder="ชื่อผู้ใช้ / เบอร์โทรศัพท์" required><p class="field-error" id="login-identifier-error" hidden></p></div>
+            <div class="field"><label for="login-password"><span data-i18n="password">รหัสผ่าน</span><span class="required" aria-hidden="true"> *</span></label><div class="password-wrap"><input id="login-password" name="password" type="password" autocomplete="current-password" data-i18n-placeholder="passwordPlaceholder" placeholder="กรอกรหัสผ่าน" required><button class="password-toggle" data-password="login-password" type="button" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><p class="field-error" id="login-password-error" hidden></p></div>
+            <div class="options"><label class="remember"><input id="remember-identifier" type="checkbox"><span data-i18n="remember">จดจำชื่อผู้ใช้</span></label><button class="text-button" type="button" data-go="forgot" data-i18n="forgotLink">ลืมรหัสผ่าน?</button></div>
+            <button class="primary-button" type="submit"><span data-i18n="login">เข้าสู่ระบบ</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+          </form>
+          <div class="join"><span data-i18n="noAccount">ยังไม่มีบัญชี?</span><button class="text-button" type="button" data-go="signup" data-i18n="createAccount">สร้างบัญชี</button></div>
+        </section>
+        <section class="view" data-screen="signup" hidden><button class="text-button back" type="button" data-go="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5-5-5 5 5 5"/></svg><span data-i18n="login">เข้าสู่ระบบ</span></button><h1 tabindex="-1" data-i18n="createAccount">สร้างบัญชี</h1>
+          <form id="signup-form" novalidate>
+            <div class="field"><label for="signup-name"><span data-i18n="fullName">ชื่อ–นามสกุล</span><span class="required" aria-hidden="true"> *</span></label><input id="signup-name" name="name" autocomplete="name" maxlength="100" data-i18n-placeholder="fullName" placeholder="ชื่อ–นามสกุล" required><p class="field-error" id="signup-name-error" hidden></p></div>
+            <div class="field"><label for="signup-phone"><span data-i18n="phone">เบอร์โทรศัพท์</span><span class="required" aria-hidden="true"> *</span></label><input id="signup-phone" name="tel" type="tel" autocomplete="tel" inputmode="tel" data-i18n-placeholder="phone" placeholder="เบอร์โทรศัพท์" required aria-describedby="phone-hint"><small id="phone-hint" data-i18n="phoneHint">1 เบอร์ ต่อ 1 บัญชี</small><p class="field-error" id="signup-phone-error" hidden></p></div>
+            <fieldset class="role-field"><legend><span data-i18n="role">บทบาทหน้าที่</span><span class="required" aria-hidden="true"> *</span></legend><div class="role-options"><label class="role-option"><input type="radio" name="role" value="entrepreneur" required><span data-i18n="entrepreneur">ผู้ประกอบการ</span></label><label class="role-option"><input type="radio" name="role" value="employee" required><span data-i18n="employee">พนักงาน</span></label></div><p class="field-error" id="signup-role-error" hidden></p></fieldset>
+            <div class="field"><label for="signup-username"><span data-i18n="username">ชื่อผู้ใช้</span><span class="required" aria-hidden="true"> *</span></label><input id="signup-username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="32" data-i18n-placeholder="username" placeholder="ชื่อผู้ใช้" required aria-describedby="username-hint"><small id="username-hint" data-i18n="usernameHint">4–32 ตัว เริ่มด้วย a–z ใช้ตัวเลข . _ - ได้</small><p class="field-error" id="signup-username-error" hidden></p></div>
+            <div class="field"><label for="signup-password"><span data-i18n="password">รหัสผ่าน</span><span class="required" aria-hidden="true"> *</span></label><div class="password-wrap"><input id="signup-password" name="new-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" data-i18n-placeholder="newPasswordPlaceholder" placeholder="อย่างน้อย 8 ตัวอักษร" required aria-describedby="password-hint"><button class="password-toggle" data-password="signup-password" type="button" aria-label="แสดงรหัสผ่าน" aria-pressed="false">แสดง</button></div><small id="password-hint" data-i18n="passwordHint">อย่างน้อย 8 ตัวอักษร</small><p class="field-error" id="signup-password-error" hidden></p></div>
+            <div class="field"><label for="signup-confirm"><span data-i18n="confirmPassword">ยืนยันรหัสผ่าน</span><span class="required" aria-hidden="true"> *</span></label><div class="password-wrap"><input id="signup-confirm" name="confirm-password" type="password" autocomplete="new-password" maxlength="128" data-i18n-placeholder="confirmPassword" placeholder="ยืนยันรหัสผ่าน" required><button class="password-toggle" data-password="signup-confirm" type="button" aria-label="แสดงรหัสผ่านยืนยัน" aria-pressed="false">แสดง</button></div><p class="field-error" id="signup-confirm-error" hidden></p></div>
+            <button class="primary-button" type="submit"><span data-i18n="createAccount">สร้างบัญชี</span></button>
+          </form>
+        </section>
+
+        <section class="view" data-screen="access" hidden>
+          <svg class="access-state-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <h1 id="access-title" tabindex="-1" data-i18n="pendingTitle">รออนุมัติ</h1>
+          <p id="access-description" class="access-copy" data-i18n="pendingCopy">ส่งคำขอแล้ว กรุณารอผู้ดูแลที่โรงงานอนุมัติ</p>
+          <p id="access-status" class="access-copy" role="status" aria-live="polite" hidden></p>
+          <div class="access-retry"><button id="access-refresh" class="primary-button" type="button" data-i18n="checkStatus">ตรวจสอบสถานะ</button><button class="text-button" type="button" data-auth-logout data-i18n="logout">ออกจากระบบ</button></div>
+        </section>
+        <section class="view" data-screen="forgot" hidden><button class="text-button back" type="button" data-go="login"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m5-5-5 5 5 5"/></svg><span data-i18n="login">เข้าสู่ระบบ</span></button><h1 tabindex="-1" data-i18n="forgotTitle">ลืมรหัสผ่าน</h1><p class="recovery-copy" data-i18n="recovery">ติดต่อผู้ดูแลโรงสีเพื่อยืนยันตัวตนและตั้งรหัสผ่านใหม่</p></section>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="join-dialog" class="access-dialog" aria-labelledby="join-title" aria-describedby="join-description">
+    <button id="join-language-toggle" class="language-button" type="button" aria-label="เปลี่ยนภาษาเป็นอังกฤษ" title="เปลี่ยนภาษาเป็นอังกฤษ"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a18 18 0 0 1 0 18 18 18 0 0 1 0-18Z"/></svg></button>
+    <h2 id="join-title" data-i18n="joinTitle">เชื่อมต่อโรงสี</h2>
+    <p id="join-description" data-i18n="joinCopy">ใส่ Code จากผู้ดูแลที่โรงงานเพื่อขอสิทธิ์ดูข้อมูล</p>
+    <form id="join-form" novalidate>
+      <div class="field"><label for="hub-code" data-i18n="hubCode">Code โรงสี</label><input id="hub-code" name="code" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64" required aria-describedby="hub-code-error"><p id="hub-code-error" class="field-error" role="alert" hidden></p></div>
+      <div class="dialog-actions"><button class="primary-button" type="submit"><span data-i18n="requestAccess">ขอสิทธิ์เข้าดู</span></button><button class="text-button" type="button" data-auth-logout data-i18n="logout">ออกจากระบบ</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

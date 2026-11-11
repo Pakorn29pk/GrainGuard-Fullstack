@@ -1,0 +1,19 @@
+/* Access states extend the supplied login design; existing panels are unchanged. */
+.access-dialog{width:min(430px,calc(100vw - 36px));max-height:calc(100dvh - 36px);overflow:auto;margin:auto;padding:30px;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:0 18px 60px #202b3226;font-family:var(--font)}
+.access-dialog::backdrop{background:#202b3266}
+.access-dialog h2{font-size:24px;line-height:1.5;margin-bottom:12px;padding-right:42px}
+.access-dialog .language-button{top:14px;right:14px}
+.access-dialog p,.access-copy{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:22px}
+.access-dialog .field{margin-bottom:20px}
+.access-dialog .dialog-actions{display:flex;align-items:center;gap:16px}
+.access-dialog .dialog-actions .primary-button{flex:1}
+.access-dialog .dialog-actions .text-button{padding:8px 4px}
+.access-dialog .field-error{margin-top:6px;color:var(--danger);font-size:12px}
+.access-dialog input{font-family:ui-monospace,monospace;letter-spacing:.1em}
+.access-dialog input::placeholder{font-family:var(--font);letter-spacing:normal}
+.access-state-icon{width:44px;height:44px;margin:0 0 16px;color:var(--muted)}
+.access-retry{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:14px}
+.access-retry .primary-button{width:auto;flex:1}
+.language-button #language-code{display:none}
+.language-button{min-width:44px}
+@media(max-width:480px){.access-dialog{padding:24px}.access-dialog h2{font-size:22px}}

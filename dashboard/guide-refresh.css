@@ -1,0 +1,198 @@
+.guide-compact {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 288px);
+  gap: 24px;
+}
+
+.guide-compact .guide-reference {
+  gap: 12px;
+}
+
+.guide-compact .guide-active > .section-head {
+  margin-bottom: 12px;
+}
+
+.guide-compact .guide-issue {
+  border-left-width: 1px;
+  border-left-color: var(--line);
+  margin-bottom: 8px;
+  padding: 16px;
+}
+
+.guide-compact .guide-issue-head {
+  align-items: start;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+.guide-compact .guide-identity {
+  flex: 1 1 140px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.guide-identity h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.guide-node {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-compact .monitor-status {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.guide-compact .monitor-status[data-level="offline"] {
+  color: var(--muted);
+}
+
+.guide-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.guide-next p {
+  flex: 1 1 180px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.guide-compact .guide-disclosure {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.guide-compact .guide-disclosure summary {
+  min-height: 44px;
+  padding-block: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.guide-compact summary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.guide-code-count {
+  margin-inline-start: 4px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-compact .guide-disclosure-body {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.guide-compact .guide-disclosure-body > .button {
+  justify-self: start;
+}
+
+.guide-compact .guide-disclosure-body p {
+  margin: 0;
+}
+
+.guide-compact .guide-codes {
+  margin-bottom: 4px;
+}
+
+.guide-compact .guide-codes strong {
+  color: var(--ink);
+}
+
+.guide-compact .guide-next .button,
+.guide-compact .guide-empty .button,
+.guide-compact .guide-disclosure-body .button {
+  min-height: 44px;
+}
+
+.guide-compact .guide-quick-steps {
+  padding: 16px;
+}
+
+.guide-compact .guide-quick-steps h2 {
+  font-size: 15px;
+}
+
+.guide-compact .guide-steps {
+  margin: 8px 0 0;
+  padding-inline-start: 20px;
+  line-height: 1.5;
+}
+
+.guide-compact .guide-steps li {
+  margin-bottom: 4px;
+}
+
+.guide-compact .guide-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.guide-compact .guide-status-reference {
+  margin: 0;
+  padding: 0 16px;
+}
+
+.guide-compact .guide-status-reference[open] {
+  padding-bottom: 16px;
+}
+
+.guide-compact .guide-legend {
+  margin: 0;
+}
+
+.guide-compact .guide-legend > div {
+  padding: 8px 0;
+}
+
+.guide-compact .guide-legend dd {
+  margin: 4px 0 0;
+}
+
+.guide-compact .guide-empty {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 16px;
+}
+
+.guide-empty p {
+  flex: 1 1 160px;
+}
+
+@media (max-width: 999px) {
+  .guide-compact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .guide-compact {
+    gap: 16px;
+  }
+  .guide-compact .guide-issue {
+    padding: 12px;
+  }
+  .guide-compact .guide-issue-head .monitor-status {
+    font-size: 11px;
+  }
+}

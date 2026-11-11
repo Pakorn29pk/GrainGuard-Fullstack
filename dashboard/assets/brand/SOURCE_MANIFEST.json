@@ -1,0 +1,19 @@
+{
+  "artwork": "Exact supplied PNG originals; no cleanup, recoloring or redraw",
+  "originals": [
+    {
+      "source": "02_team_logo_PumpkinTec_pumpkin.png",
+      "runtime": "pumpkintec-team.png",
+      "bytes": 676325,
+      "sha256": "9cd5974adc3b1050f99ee550ae483cdb045c208bcf98f7526bb76c8acd48c34a"
+    },
+    {
+      "source": "03_product_logo_GrainGuard_G.png",
+      "runtime": "grainguard-product.png",
+      "bytes": 603591,
+      "sha256": "1035e0a2a1b016c94810e00c0c0540bb5307711c473e4c7ecc00f6d640f3ea12"
+    }
+  ],
+  "derivatives": "Full-size lossless WebP pixel-checked equal; tiny 96px/48px WebP use standard Lanczos resizing only.",
+  "app_icon": "Self-contained SVG rounded white tile embedding exact product PNG unchanged."
+}

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=GrainGuard
+Comment=Open the local mill dashboard
+Comment[th]=เปิดแดชบอร์ดโรงสี
+Exec=/usr/local/libexec/grainguard-app.py
+Icon=grainguard
+Terminal=false
+Categories=Utility;
+Keywords=GrainGuard;Dashboard;Monitoring;โรงสี;แดชบอร์ด;
+StartupNotify=true
+StartupWMClass=grainguard

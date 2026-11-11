@@ -1,0 +1,45 @@
+# GrainGuard hub-core configuration. Every key may also be set as an upper-case environment variable
+# (hub_id -> HUB_ID, cloud_url -> CLOUD_URL ...). Environment wins over this file.
+hub_id: mill-1
+cloud_url: ""            # https://grainguard.<you>.workers.dev   (empty = fully offline mode)
+cloud_secret: ""         # shared HMAC secret with the Cloudflare Worker
+expected_fw: ""          # e.g. "1.0.3" - nodes with another firmware get the fw_mismatch warning
+
+mqtt_host: 127.0.0.1
+mqtt_port: 1883
+mqtt_user: hub
+mqtt_pass: ""            # set via MQTT_PASS in hub.env (install.sh generates it) - never write it here
+
+http_host: 10.77.50.1    # node-LAN address (DF-42); add the mill-LAN address with http_extra_hosts
+http_extra_hosts: ""
+http_port: 8080
+tele_retention_days: 60  # DF-42
+data_dir: /data
+tz: Asia/Bangkok
+nic_a: eth0              # node-LAN interface (Raspberry Pi 5 on-board Ethernet) - enables carrier-based PLANT_POWER_OFF detection
+admin_token: ""          # MANDATORY (>= 12 chars, DF-42): the hub does not start without it. Put it in hub.env (ADMIN_TOKEN), not here
+
+thresholds:              # contract defaults - only change if you know why
+  stale_s: 5
+  offline_event_s: 15
+  boot_grace_s: 120
+  flatline_s: 60
+  sat_count: 20
+  drift_lo: 0.5
+  drift_hi: 2.0
+  vin_low: 19.5            # DF-53: the node shows steady yellow at the same level
+  vin_high: 28
+  temp_high: 70
+  # --- v1.1 error codes (errors.yaml) / hub self-checks / screen lifecycle ---
+  cal_stuck_s: 600         # E105: CAL longer than this
+  ack_stuck_s: 30          # E401
+  unacked_alarm_s: 1800    # E402
+  disk_warn_pct: 85        # E501 (clears at disk_clear_pct 80)
+  cpu_hot_c: 80            # E507 (clears at 75)
+  uplink_fail_s: 300       # E503
+  ntp_cmd: "chronyc tracking"   # E505; empty or missing binary = not checked
+  power_hours: "06:00-17:00"    # E508 also fires inside these local hours
+  integrity_time: "03:30"       # E502 daily quick_check
+  screen_prior_days: 30    # screen life prior
+  screen_advisory_pct: 90  # one "ใกล้ถึงอายุตะแกรง" notice per cycle
+  screen_refit_time: "00:10"
