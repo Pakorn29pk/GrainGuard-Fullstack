@@ -29,7 +29,7 @@
   const care=`<button type="button" class="gg-ibtn" data-action="node-maintenance" data-id="${n.id}" title="${e(w.care)}" aria-label="${e(w.care)}">${icon('screen')}</button>`;
   const set=c.isAdmin?`<button type="button" class="gg-ibtn" data-action="machine-settings" data-id="${n.id}" title="${e(w.settings)}" aria-label="${e(w.settings)}">${icon('settings')}</button>`:'';
   return `<article class="gg-tile${unack?' unack':acked?' acked':''}" data-level="${l}" data-node="${n.id}" data-ack="${!!n.ack}" aria-label="Node ${n.id} · ${e(c.name(n))} · ${e(label)}">
-   <header class="gg-band"><span class="gg-bi">${icon(c.statusIcon(l))}</span><span>${e(unack?m.unack:acked?m.acked:label)}</span><span class="gg-band-act">${ack}${care}${set}</span></header>
+   <header class="gg-band"><span class="gg-bi">${icon(c.statusIcon(l))}</span>${a.needsAttention?`<button type="button" class="gg-blink" data-action="inspect" data-id="${n.id}" title="${e(a.summary)}">${e(unack?m.unack:acked?m.acked:label)}</button>`:`<span>${e(unack?m.unack:acked?m.acked:label)}</span>`}<span class="gg-band-act">${ack}${care}${set}</span></header>
    <div class="gg-body"><button type="button" class="gg-id" data-action="detail" data-id="${n.id}"><span class="gg-nno">${pad(n.id)}</span><span class="gg-nm">${e(c.name(n))}</span><span class="gg-fresh">${e(c.age(n))}</span></button>
    <div class="gg-reads">${c.readings(n,'a')}${c.readings(n,'b')}</div>
    <div class="gg-wear${wear>=90?' hi':''}"><span>${m.screen}</span><span class="gg-bar"><i style="width:${wear==null?0:Math.min(100,Math.max(0,wear))}%"></i></span><span class="num">${wear==null?'—':Math.round(wear)+'%'}</span></div></div>
@@ -41,8 +41,11 @@
   if(c.filter==='attention')nodes=nodes.filter(n=>c.assess(n).needsAttention);
   if(c.filter==='offline')nodes=nodes.filter(n=>['offline','unknown'].includes(n.status));
   if(c.filter==='all'&&c.offlinePolicy==='group')nodes=nodes.filter(n=>n.status!=='offline');
-  if(!c.nodes.length)return `<div class="gg-ghost" style="grid-column:1/-1;grid-row:1/-1"><span>${c.icon('grid')}${c.w.noNodes}<small>${c.w.addHint}</small></span></div>`;
+  // New Nodes (discovery = "temporary") take free slots, each with its own Register button.
+  const pend=[].concat(c.pendingCards()||[]).filter(Boolean);
+  if(!c.nodes.length&&!pend.length)return `<div class="gg-ghost" style="grid-column:1/-1;grid-row:1/-1"><span>${c.icon('grid')}${c.w.noNodes}<small>${c.w.addHint}</small></span></div>`;
   const out=nodes.map(n=>card(n,c));
+  out.push(...pend.slice(0,Math.max(0,6-out.length)));
   if(!out.length)return `<div class="gg-ghost"><span>${c.icon('check')}<small>${c.w.noMatch}</small></span></div>`;
   if(c.filter==='all')while(out.length<6)out.push(c.isAdmin?`<button type="button" class="gg-ghost" data-action="add-machine"><span>${c.icon('plus')}${c.w.add}<small>${m.slot}</small></span></button>`:`<div class="gg-ghost"><span><small>${m.slot}</small></span></div>`);
   return out.join('');
@@ -61,7 +64,7 @@
      ${hubCodes.length?`<button type="button" class="gg-lnk" style="margin-top:12px" data-action="view-attention">${icon('alert')}${w.hub} · ${hubCodes.map(e).join(' · ')}</button>`:''}</section>
     <section class="gg-card"><div class="gg-rhd"><h3 class="gg-h3">${w.system}</h3>${c.fixture?`<span class="gg-mode" style="margin-left:auto">MOCK</span>`:''}</div>${c.sysGrid?c.sysGrid():''}${!c.connected&&c.started?`<div class="gg-rhd" style="margin-top:12px"><span class="gg-muted">${w.lostHint}</span><button type="button" class="gg-btn gg-sm" style="margin-left:auto" data-action="retry">${icon('link')}${w.retry}</button></div>`:''}</section>
     <section class="gg-card gg-feedcard"><div class="gg-rhd"><h3 class="gg-h3">${m.recent}</h3><button type="button" class="gg-lnk" data-action="nav" data-page="history">${m.viewAll}${icon('chevron')}</button></div><ol class="gg-feed">${c.feed?c.feed():''}</ol></section>
-    ${c.pendingCount?`<button type="button" class="gg-btn" data-action="nav" data-page="settings">${icon('plus')}${w.discovered} (${c.pendingCount})</button>`:''}
+    ${c.pendingCount?`<button type="button" class="gg-btn" data-action="nav" data-page="settings" data-tab="pending">${icon('plus')}${w.discovered} (${c.pendingCount})</button>`:''}
    </aside></div>`;
  }
  // Alarms page (approved mock v15): equal cards for each active problem, then three equal help boxes.

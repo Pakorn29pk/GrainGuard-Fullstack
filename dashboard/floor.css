@@ -170,6 +170,11 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 .gg-ghost span{display:flex;flex-direction:column;align-items:center;gap:8px}
 .gg-ghost .icon{font-size:34px}
 .gg-ghost small{font-size:14px;font-weight:400;color:var(--gg-muted)}
+.gg-newnode{border-color:var(--gg-learn);cursor:default}
+.gg-blink{all:unset;cursor:pointer;text-underline-offset:4px}
+.gg-blink:hover{text-decoration:underline}
+.gg-blink:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
+.gg-newnode .gg-btn{margin-top:6px}
 div.gg-ghost{cursor:default}
 
 /* ---------- overview side panel ---------- */
@@ -472,6 +477,17 @@ dialog input:not([type=radio]):not([type=checkbox]),dialog select{height:48px;pa
 dialog .toolbar{display:flex;gap:8px;flex-wrap:wrap}
 dialog .icon{width:1em;height:1em;fill:none;stroke:currentColor}
 #toast{font-family:var(--gg-ui);border-radius:12px}
+/* Machine settings: two columns on the floor screen so Save is always visible (no scrolling inside the dialog).
+   Left = machine slot + Node list (only the list scrolls if it is ever too long); right = MAC, name, info, tools, actions. */
+@media (min-width:1100px){
+  dialog#gg-machine-settings{width:min(1160px,calc(100% - 28px))}
+  #gg-ms-form{display:grid;grid-template-columns:1.15fr 1fr;column-gap:32px;align-items:start}
+  #gg-ms-form>*{grid-column:2}
+  #gg-ms-form>:nth-child(1){grid-column:1;grid-row:1}
+  #gg-ms-form>:nth-child(2){grid-column:1;grid-row:2/span 9}
+  dialog#gg-machine-settings .ms-candidates{max-height:540px;overflow:auto;margin-bottom:0}
+  dialog#gg-machine-settings .ms-tools{margin-top:4px}
+}
 @media (max-width:1099px){#app{display:block}.gg-stage{width:100%;max-width:100vw}.gg-side{min-width:0;max-width:100%}.gg-col{min-width:0;max-width:100%}.gg-nav{flex:none}.gg-side-foot .gg-nav{display:none}}
 @media (max-width:1099px){.gg-head-r{flex-wrap:wrap;max-width:100%;row-gap:10px}.gg-head-r .gg-sep{display:none}.gg-clockbox strong{font-size:24px}}
 @media (max-width:1099px){.gg-ov-head,.gg-pgh{flex-wrap:wrap}.gg-ov-head h2{flex-basis:100%}.gg-seg button{white-space:nowrap;padding:0 12px}.gg-ov-head .gg-btn{margin-left:0}}
