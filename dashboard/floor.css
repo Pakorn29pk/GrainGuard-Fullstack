@@ -2,12 +2,13 @@
    Layout: fixed 1920×1080 stage scaled to the screen (body zoom, set in live-ui.js). Below 1100 px wide the stage flows for phones. */
 :root{
   --gg-bg:#F5F6F8; --gg-panel:#FFFFFF; --gg-soft:#F1F2F5; --gg-line:#E7E9ED;
-  --gg-ink:#1C1C1E; --gg-ink-2:#3C3C43; --gg-muted:#86868B;
+  /* Text-bearing colours pass WCAG AA (>=4.5:1) on white, --gg-soft and --gg-bg, so labels read from across the mill floor. */
+  --gg-ink:#1C1C1E; --gg-ink-2:#3C3C43; --gg-muted:#66666C;
   --gg-brand:#1E3246; --gg-gold:#C49A3C;
-  --gg-alarm:#E5352B; --gg-alarm-ink:#C9241B; --gg-alarm-bg:#FFE5E3;
-  --gg-fault:#B86200; --gg-fault-bg:#FFF0D9;
+  --gg-alarm:#D42A1E; --gg-alarm-ink:#C9241B; --gg-alarm-bg:#FFE5E3;
+  --gg-fault:#9C5200; --gg-fault-bg:#FFF0D9;
   --gg-learn:#0A64D8; --gg-learn-bg:#E3EEFD;
-  --gg-run:#239B42; --gg-idle:#86868B; --gg-nodata:#AEAEB2;
+  --gg-run:#1A7F35; --gg-idle:#86868B; --gg-nodata:#AEAEB2;
   --gg-led-ok:#22B455; --gg-led-warn:#F2B705; --gg-led-bad:#E5352B; --gg-led-off:#B8BCC4;
   --gg-chart:#1E3246; --gg-chart-fill:rgba(30,50,70,.08); --gg-grid:#ECECF0;
   --gg-r:22px; --gg-r-s:12px;
@@ -87,7 +88,11 @@ body{margin:0;color:var(--gg-ink);font-family:var(--gg-ui)}
 .gg-banner .gg-ghost{background:none;border:1.5px solid rgba(255,255,255,.75);color:#fff}
 @keyframes gg-blink{50%{opacity:.35}}
 @media (prefers-reduced-motion:reduce){.gg-banner .icon,.gg-tile.unack .gg-band{animation:none}}
-#live-connection-warning{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:50;background:var(--gg-ink);color:var(--gg-panel);padding:12px 20px;border-radius:12px;font:600 16px var(--gg-ui)}
+/* Hub-lost notice: a compact pill at the top centre. Edges are !important because older stylesheets
+   (redesign.css body[data-page=overview] rule, styles.css) also position this id and stretched it into a full-height box. */
+#live-connection-warning:not([hidden]){position:fixed;top:12px!important;bottom:auto!important;left:50%!important;right:auto!important;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);height:auto;z-index:50;
+  display:flex;align-items:center;gap:12px;background:var(--gg-ink);color:#fff;padding:12px 22px;border:0;border-radius:14px;box-shadow:0 10px 30px rgba(15,20,25,.25);font:600 17px var(--gg-ui)}
+#live-connection-warning:not([hidden])::before{content:"";width:12px;height:12px;border-radius:50%;flex:none;background:var(--gg-led-bad);box-shadow:0 0 0 4px rgba(229,53,43,.3)}
 
 /* ---------- status bar ---------- */
 .gg-status{height:34px;flex:none;display:flex;align-items:center;gap:20px;padding:0 24px;font-size:14px;color:var(--gg-muted);background:var(--gg-bg);border-top:1px solid var(--gg-line)}
@@ -243,6 +248,7 @@ div.gg-ghost{cursor:default}
 .gg-acts{display:flex;gap:10px;grid-row:span 2;flex-wrap:wrap;justify-content:flex-end}
 .gg-adv{margin:0;font-size:17px;color:var(--gg-ink-2)}
 .gg-chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:15px;font-size:15px;font-weight:600;color:#fff;background:var(--sc,var(--gg-nodata));white-space:nowrap}
+.gg-chip[data-level="rest"],.gg-chip[data-level="offline"],.gg-chip[data-level="unknown"],.gg-chip[data-level="empty"],.gg-chip:not([data-level]){background:var(--gg-soft);color:var(--gg-ink-2)}
 .gg-chip[data-level="normal"]{--sc:var(--gg-run)} .gg-chip[data-level="alarm"]{--sc:var(--gg-alarm)} .gg-chip[data-level="fault"]{--sc:var(--gg-fault)} .gg-chip[data-level="learning"]{--sc:var(--gg-learn)} .gg-chip[data-level="rest"]{--sc:var(--gg-idle)}
 .gg-shd{display:flex;align-items:center;gap:14px;flex:none}
 .gg-shd .gg-seg{margin-left:auto}
