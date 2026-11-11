@@ -24,8 +24,8 @@ python3 -m venv .venv
 
 | บัญชีทดสอบ | Username | Password สำหรับ Preview |
 | --- | --- | --- |
-| เดโม 1 เครื่อง | `pumpkintec` | `preview-only-2026` |
-| โรงสีจำลอง 6 เครื่อง | `uengliangseng` | `preview-only-2026` |
+| เดโม 1 เครื่อง | `pumpkintec` | `pumpkintec` |
+| โรงสีจำลอง 6 เครื่อง | `uengliangseng` | `uengliangseng` |
 
 Preview สร้างบัญชีและข้อมูลจำลองใหม่ในโฟลเดอร์ชั่วคราวทุกครั้ง กด Ctrl+C เพื่อปิด
 
